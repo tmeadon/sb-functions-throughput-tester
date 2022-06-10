@@ -1,0 +1,45 @@
+{
+  "_id": "62a3590563a474a0320a15fc",
+  "index": 0,
+  "guid": "0c4d2827-e44d-4396-822f-db7ce17605f5",
+  "isActive": false,
+  "balance": "$1,759.82",
+  "picture": "http://placehold.it/32x32",
+  "age": 32,
+  "eyeColor": "blue",
+  "name": "Christie Conrad",
+  "gender": "female",
+  "company": "KOZGENE",
+  "email": "christieconrad@kozgene.com",
+  "phone": "+1 (847) 471-3774",
+  "address": "241 Amber Street, Bethpage, Marshall Islands, 8119",
+  "about": "Ut minim duis est incididunt labore. Pariatur cupidatat adipisicing laborum excepteur ullamco ut eu ut et ullamco est excepteur. Ex eiusmod minim in nostrud adipisicing elit. Nisi magna magna occaecat irure id aliqua. Laboris aliquip laboris Lorem in eiusmod do quis amet et pariatur non nisi et.\r\n",
+  "registered": "2018-11-05T01:22:08 -00:00",
+  "latitude": -44.138331,
+  "longitude": -168.255837,
+  "tags": [
+    "incididunt",
+    "id",
+    "esse",
+    "exercitation",
+    "non",
+    "adipisicing",
+    "reprehenderit"
+  ],
+  "friends": [
+    {
+      "id": 0,
+      "name": "Kim Mcbride"
+    },
+    {
+      "id": 1,
+      "name": "Carly Allison"
+    },
+    {
+      "id": 2,
+      "name": "Kim Meadows"
+    }
+  ],
+  "greeting": "Hello, Christie Conrad! You have 1 unread messages.",
+  "favoriteFruit": "banana"
+}
