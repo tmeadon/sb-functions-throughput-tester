@@ -1,13 +1,18 @@
 provider "azurerm" {
-  features {}
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
+  }
 }
 
 locals {
   tags = {
     scenario = "sb-functions-throughput-test"
   }
-  unique_name = lower(random_id.random.b64_url)
+  unique_name = replace(replace(lower(random_id.random.b64_url), "-", ""), "_", "")
 }
+
 
 resource "random_id" "random" {
   keepers = {
@@ -22,11 +27,12 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_servicebus_namespace" "sb_ns" {
-  name                = local.unique_name
+  name                = "sb${local.unique_name}"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
 
-  sku = "Standard"
+  sku      = "Premium"
+  capacity = 2
 }
 
 resource "azurerm_servicebus_queue" "sb_in" {
@@ -44,7 +50,7 @@ resource "azurerm_servicebus_queue" "sb_out" {
 }
 
 resource "azurerm_storage_account" "stg" {
-  name                = replace(local.unique_name, "-", "")
+  name                = local.unique_name
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -57,9 +63,9 @@ resource "azurerm_service_plan" "asp" {
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
 
-  os_type  = "Windows"
-  sku_name = "S1"
-  worker_count = 1
+  os_type      = "Windows"
+  sku_name     = "S1"
+  worker_count = 2
 }
 
 resource "azurerm_application_insights" "ai" {
@@ -82,6 +88,7 @@ resource "azurerm_windows_function_app" "func" {
   site_config {
     application_insights_key               = azurerm_application_insights.ai.instrumentation_key
     application_insights_connection_string = azurerm_application_insights.ai.connection_string
+    always_on                              = true
 
     application_stack {
       dotnet_version              = "6"
@@ -90,8 +97,8 @@ resource "azurerm_windows_function_app" "func" {
   }
 
   connection_string {
-    name = "sb_conn"
-    type = "Custom"
+    name  = "sb_conn"
+    type  = "Custom"
     value = azurerm_servicebus_namespace.sb_ns.default_primary_connection_string
   }
 
@@ -110,6 +117,6 @@ output "resource_group_name" {
 }
 
 output "service_bus_connection" {
-  value = azurerm_servicebus_namespace.sb_ns.default_primary_connection_string
+  value     = azurerm_servicebus_namespace.sb_ns.default_primary_connection_string
   sensitive = true
 }

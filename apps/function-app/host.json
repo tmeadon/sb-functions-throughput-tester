@@ -6,6 +6,13 @@
                 "isEnabled": true,
                 "excludedTypes": "Request"
             }
+        },
+        "logLevel": {
+            "Host.Concurrency": "Trace"
         }
+    },
+    "concurrency": { 
+        "dynamicConcurrencyEnabled": true, 
+        "snapshotPersistenceEnabled": true 
     }
 }
